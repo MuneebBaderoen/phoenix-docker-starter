@@ -14,6 +14,8 @@ defmodule Myapp.Application do
       supervisor(MyappWeb.Endpoint, []),
       # Start your own worker by calling: Myapp.Worker.start_link(arg1, arg2, arg3)
       # worker(Myapp.Worker, [arg1, arg2, arg3]),
+      # Start a supervisor for presence
+      supervisor(MyappWeb.Presence, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -3,7 +3,7 @@
 
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
-import {Socket} from "phoenix"
+import {Socket, Presence} from "phoenix"
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -15,7 +15,11 @@ function getParameterByName(name, url) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
-let socket = new Socket("/socket", {params: {user_id: getParameterByName('user_id')}})
+let socket = new Socket("/socket", {
+    params: {
+        user_id: getParameterByName('user_id')
+    }
+})
 // let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // When you connect, you'll often need to authenticate the client.
@@ -68,21 +72,50 @@ socket.connect()
 let channel = socket.channel("room:lobby", {})
 let chatInput         = document.querySelector("#chat-input")
 let messagesContainer = document.querySelector("#messages")
+let presences = {}
 
+// Undate list of online users
+function renderOnlineUsers(presences) {
+  let response = ""
+
+  Presence.list(presences, (id, {metas: [first, ...rest]}) => {
+    let count = rest.length + 1
+    response += `<br>${id} (count: ${count})</br>`
+  })
+
+  document.querySelector("#presenceContainer").innerHTML = response
+}
+
+// Listen for submit events on the text input
 chatInput.addEventListener("keypress", event => {
-  if(event.keyCode === 13){
-    channel.push("new_msg", {body: chatInput.value})
+  if(event.keyCode === 13 && chatInput.value!==""){
+    // Send the new message to server
+    channel.push("new_msg", {
+      body: chatInput.value
+    })
+    // Clear input
     chatInput.value = ""
   }
 })
 
+// Listen for messages pushed to this channel
 channel.on("new_msg", payload => {
   let messageItem = document.createElement("li")
-    console.log(payload.body)
+  console.log(payload.body)
   messageItem.innerText = `[${Date()}] ${payload.body}`
   messagesContainer.appendChild(messageItem)
 })
 
+// Listen for changes in presence
+channel.on("presence_state", state => {
+  presences = Presence.syncState(presences, state)
+  renderOnlineUsers(presences)
+})
+
+channel.on("presence_diff", diff => {
+  presences = Presence.syncDiff(presences, diff)
+  renderOnlineUsers(presences)
+})
 
 channel.join()
   .receive("ok", resp => { console.log("Joined successfully", resp) })
