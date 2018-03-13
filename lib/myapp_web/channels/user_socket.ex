@@ -20,7 +20,14 @@ defmodule MyappWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
-    {:ok, assign(socket, :user_id, String.to_integer(params["user_id"]))}
+    {:ok, assign(socket, :user_id, get_user_id(params))}
+  end
+
+  defp get_user_id(params) do
+    case params['user_id'] do
+      nil -> 0
+      _ -> String.to_integer(params['user_id'])
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
