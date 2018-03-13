@@ -30,7 +30,11 @@ services:
       - db
     environment:
       - MIX_ENV=test
+      - DB_ENV_POSTGRES_USER=postgres
+      - DB_ENV_POSTGRES_PASSWORD=postgres
+      - DB_ENV_POSTGRES_HOST=db
     volumes:
       - .:/app
+    command: mix test
     
     
