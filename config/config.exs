@@ -12,7 +12,7 @@ config :myapp,
 # Configures the endpoint
 config :myapp, MyappWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "tOCWzI0FVpOHjFD1l6Hm93PoZJXcTeLUQSQzOh+zQgAw9vbqL/u52BDYHCVpnDC1",
+  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
   render_errors: [view: MyappWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Myapp.PubSub,
            adapter: Phoenix.PubSub.PG2]
@@ -24,4 +24,4 @@ config :logger, :console,
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
-# import_config "#{Mix.env}.exs"
+import_config "#{Mix.env}.exs"
