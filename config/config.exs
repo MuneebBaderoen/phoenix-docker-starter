@@ -12,7 +12,6 @@ config :myapp,
 # Configures the endpoint
 config :myapp, MyappWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: Map.fetch!(System.get_env(), "SECRET_KEY_BASE")
   render_errors: [view: MyappWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Myapp.PubSub,
            adapter: Phoenix.PubSub.PG2]
