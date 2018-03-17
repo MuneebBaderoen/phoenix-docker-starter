@@ -22,7 +22,22 @@ defmodule MyappWeb.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(params, socket) do
-    {:ok, assign(socket, :user_id, get_user_id(params))}
+    socket
+    |> assign(:user_name, get_user_name(params))
+    |> assign(:user_id, get_user_id(params))
+    |> ok()  
+  end
+
+  defp ok(socket) do
+    {:ok, socket}
+  end
+
+  defp get_user_name(params) do
+    IO.inspect(params["username"])
+    case params["username"] do
+      nil -> "anonymous"
+      id -> id
+    end
   end
 
   defp get_user_id(params) do

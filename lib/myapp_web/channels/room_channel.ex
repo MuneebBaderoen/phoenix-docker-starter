@@ -13,14 +13,14 @@ defmodule MyappWeb.RoomChannel do
 
   def handle_info(:after_join, socket) do
     push socket, "presence_state", Presence.list(socket)
-    {:ok, _} = Presence.track(socket, socket.assigns.user_id, %{
+    {:ok, _} = Presence.track(socket, socket.assigns.user_name, %{
       online_at: inspect(System.system_time(:seconds))
     })
     {:noreply, socket}
   end
 
   def handle_in("new_msg", %{"body" => body}, socket) do
-    broadcast! socket, "new_msg", %{body: body}
+    broadcast! socket, "new_msg", %{body: body, from: socket.assigns.user_name}
     {:noreply, socket}
   end
 

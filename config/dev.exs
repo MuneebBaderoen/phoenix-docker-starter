@@ -32,6 +32,7 @@ config :myapp, MyappWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :myapp, MyappWeb.Endpoint,
+  secret_key_base: "EnQiq2CeJZxI5WlySEMbYPXEfUZ9KvMH6+XnLBQN63RFIo4qx/WeKRndJ190JlSldevelopment_secret_key_base",
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},

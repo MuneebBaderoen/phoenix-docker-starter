@@ -4,6 +4,7 @@
 // To use Phoenix channels, the first step is to import Socket
 // and connect at the socket path in "lib/web/endpoint.ex":
 import {Socket, Presence} from "phoenix"
+import moment from "moment"
 
 function getParameterByName(name, url) {
     if (!url) url = window.location.href;
@@ -17,6 +18,7 @@ function getParameterByName(name, url) {
 
 let socket = new Socket("/socket", {
     params: {
+        username: getParameterByName('username'),
         user_id: getParameterByName('user_id')
     }
 })
@@ -102,7 +104,7 @@ chatInput.addEventListener("keypress", event => {
 channel.on("new_msg", payload => {
   let messageItem = document.createElement("li")
   console.log(payload.body)
-  messageItem.innerText = `[${Date()}] ${payload.body}`
+  messageItem.innerText = `[${payload.from} ${moment().format('hh:mm:ss')}] ${payload.body}`
   messagesContainer.appendChild(messageItem)
 })
 
