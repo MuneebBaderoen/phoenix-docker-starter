@@ -31,7 +31,9 @@ defmodule MyappWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", MyappWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", MyappWeb do
+    pipe_through :api
+
+    resources "/plaintexts", PlaintextController, except: [:new, :edit]
+  end
 end
