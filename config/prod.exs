@@ -22,7 +22,7 @@ config :myapp, MyappWeb.Endpoint,
 config :logger, level: :info
 
 # Configure your database
-config :myapp, MyApp.Repo,
+config :myapp, Myapp.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   database: "myapp_prod",
