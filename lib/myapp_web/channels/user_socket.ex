@@ -5,7 +5,9 @@ defmodule MyappWeb.UserSocket do
   channel "room:*", MyappWeb.RoomChannel
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport :websocket, Phoenix.Transports.WebSocket,
+    timeout: 45_000
+
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
@@ -24,9 +26,9 @@ defmodule MyappWeb.UserSocket do
   end
 
   defp get_user_id(params) do
-    case params['user_id'] do
+    case params["user_id"] do
       nil -> 0
-      _ -> String.to_integer(params['user_id'])
+      id -> String.to_integer(id)
     end
   end
 
