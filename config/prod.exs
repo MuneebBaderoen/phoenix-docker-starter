@@ -15,8 +15,10 @@ use Mix.Config
 # which you typically run after static files are built.
 config :myapp, MyappWeb.Endpoint,
   load_from_system_env: true,
-  url: [scheme: "https", host: "dry-lowlands-31488.herokuapp.com", port: 443],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  # url: [scheme: "https", host: "dry-lowlands-31488.herokuapp.com", port: 443],
+  url: [scheme: "http", host: 'localhost', port: System.get_env("PORT")],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
 
 # Do not print debug messages in production
 config :logger, level: :info
@@ -26,8 +28,8 @@ config :myapp, Myapp.Repo,
   adapter: Ecto.Adapters.Postgres,
   url: System.get_env("DATABASE_URL"),
   database: "myapp_prod",
-  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  ssl: true
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
+  # ssl: true
 
 # ## SSL Support
 #
