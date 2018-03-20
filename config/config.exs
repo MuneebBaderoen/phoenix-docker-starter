@@ -14,6 +14,7 @@ config :phoenix, :format_encoders,
 
 # Configures the endpoint
 config :myapp, MyappWeb.Endpoint,
+  secret_key_base: System.get_env("SECRET_KEY_BASE"),
   url: [host: "localhost"],
   render_errors: [view: MyappWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: Myapp.PubSub,

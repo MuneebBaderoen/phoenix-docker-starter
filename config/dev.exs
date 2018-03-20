@@ -32,7 +32,7 @@ config :myapp, MyappWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :myapp, MyappWeb.Endpoint,
-  secret_key_base: "EnQiq2CeJZxI5WlySEMbYPXEfUZ9KvMH6+XnLBQN63RFIo4qx/WeKRndJ190JlSldevelopment_secret_key_base",
+  secret_key_base: "dYH6TyFRl+aO3CV9kF1jhWpW1syuicHgOCT/3Qt02LS+x22Xt/jBLuf4es+4WydT",
   live_reload: [
     patterns: [
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
@@ -52,8 +52,7 @@ config :phoenix, :stacktrace_depth, 20
 # Configure your database
 config :myapp, Myapp.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: System.get_env("DB_ENV_POSTGRES_USER") || "postgres",
-  password: System.get_env("DB_ENV_POSTGRES_PASSWORD") || "postgres",
-  hostname: System.get_env("DB_ENV_POSTGRES_HOST") || "localhost",
+  username: "postgres",
+  password: "postgres",
   database: "myapp_dev",
   pool_size: 10
