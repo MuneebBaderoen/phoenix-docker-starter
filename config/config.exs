@@ -9,6 +9,9 @@ use Mix.Config
 config :myapp,
   ecto_repos: [Myapp.Repo]
 
+config :phoenix, :format_encoders,
+  json: Jason
+
 # Configures the endpoint
 config :myapp, MyappWeb.Endpoint,
   url: [host: "localhost"],
